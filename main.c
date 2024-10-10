@@ -37,11 +37,11 @@ int novo(){
     int percent;
     printf("\nTITULO:");
     scanf("%d", &tit);
-    printf"\nDATA DE INICIO:");
+    printf("\nDATA DE INICIO:");
     scanf("%d", &ini);
-    printf"\nDATA DE ENCERRAMENTO:");
+    printf("\nDATA DE ENCERRAMENTO:");
     scanf("%d", &deadline);
-    printf"\n POR CENTAGEM FEITA:");
+    printf("\n POR CENTAGEM FEITA:");
     scanf("%d", &percent);
 }
 
