@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 
 int menu();
 int lista();
 int edit();
 int novo();
+
+#define MAX_SIZE 100
 
 int menu(){
     int opcao;
@@ -21,12 +24,27 @@ int menu(){
             edit();
             break;
     }
+    return 0;
 }
 
 //---------------------------------------------------------------------------------------
 
 int lista(){
-    printf("lista");
+    printf("\n\nEsta e a sua lista de tarefas:\n");
+
+    char lista[MAX_SIZE][50];
+    int tamanho = 0;
+
+    strcpy(lista[tamanho++], "\nTitulo: Teste nome");
+    strcpy(lista[tamanho++], "Data de criacao: 10/10/2024");
+    strcpy(lista[tamanho++], "Porcentagem: 80%");
+
+    printf("valor 1: ", lista[1]);
+
+    for(int i = 0; i < tamanho; i++) {
+        printf("%s\n", lista[i]);
+    }    
+
     return 0;
 }
     
@@ -41,7 +59,7 @@ int novo(){
     scanf("%d", &ini);
     printf("\nDATA DE ENCERRAMENTO:");
     scanf("%d", &deadline);
-    printf("\n POR CENTAGEM FEITA:");
+    printf("\nPORCENTAGEM FEITA:");
     scanf("%d", &percent);
 }
 
