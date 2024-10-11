@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int menu();
 int lista();
@@ -31,18 +32,26 @@ int lista(){
 }
     
 int novo(){
-    int tit;
-    int ini;
-    int deadline;
-    int percent;
+    char lista[4][100];
+    char tit[100];
+    char ini[100];
+    char deadline[100];
+    char percent[100];
     printf("\nTITULO:");
-    scanf("%d", &tit);
-    printf"\nDATA DE INICIO:");
-    scanf("%d", &ini);
-    printf"\nDATA DE ENCERRAMENTO:");
-    scanf("%d", &deadline);
-    printf"\n POR CENTAGEM FEITA:");
-    scanf("%d", &percent);
+    scanf(" %[^\n]", tit);
+    strcpy(lista[0],tit);
+    printf("\nDATA DE INICIO:");
+    scanf(" %[^\n]", ini);
+    strcpy(lista[1],ini);
+    printf("\nDATA DE ENCERRAMENTO:");
+    scanf(" %[^\n]", deadline);
+    strcpy(lista[2],deadline);
+    printf("\n POR CENTAGEM FEITA:");
+    scanf(" %[^\n]", percent);
+    strcpy(lista[3],percent);
+    for (int i = 0; i < 4; i++) {
+        printf("lista[%d]: %s\n", i, lista[i]);
+    }
 }
 
 int edit(){
