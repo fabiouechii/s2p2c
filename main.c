@@ -4,7 +4,14 @@
 int menu();
 int lista();
 int edit();
-int novo();
+void novo(const char* arq);
+
+typedef struct {
+    char titulo[100];
+    char data_inicio[100];
+    char data_encerramento[100];
+    char porcentagem[100];
+} tarefa;
 
 int menu(){
     int opcao;
@@ -16,8 +23,8 @@ int menu(){
             lista();
             break;
         case 2:
-            novo();
-            break;
+            novo("tarefas.bin");
+            break;    
         case 3:
             edit();
             break;
@@ -31,26 +38,25 @@ int lista(){
     return 0;
 }
     
-int novo(){
-    char lista[4][100];
-    char tit[100];
-    char ini[100];
-    char deadline[100];
-    char percent[100];
-    printf("\nTITULO:");
-    scanf(" %[^\n]", tit);
-    strcpy(lista[0],tit);
-    printf("\nDATA DE INICIO:");
-    scanf(" %[^\n]", ini);
-    strcpy(lista[1],ini);
-    printf("\nDATA DE ENCERRAMENTO:");
-    scanf(" %[^\n]", deadline);
-    strcpy(lista[2],deadline);
-    printf("\n POR CENTAGEM FEITA:");
-    scanf(" %[^\n]", percent);
-    strcpy(lista[3],percent);
-    for (int i = 0; i < 4; i++) {
-        printf("lista[%d]: %s\n", i, lista[i]);
+void novo(const char* arq) {
+    tarefa c;
+    FILE *file = fopen(arq, "ab");
+
+    if (file) {
+        printf("\nTITULO: ");
+        scanf(" %[^\n]", c.titulo);
+        printf("\nDATA DE INICIO: ");
+        scanf(" %[^\n]", c.data_inicio);
+        printf("\nDATA DE ENCERRAMENTO: ");
+        scanf(" %[^\n]", c.data_encerramento);
+        printf("\nPORCENTAGEM FEITA: ");
+        scanf(" %[^\n]", c.porcentagem);
+
+        fwrite(&c, sizeof(tarefa), 1, file);
+        fclose(file);
+        printf("\nTarefa adicionada\n");
+    } else {
+        printf("\nerro ao abrir o arquivo.\n");
     }
 }
 
