@@ -13,6 +13,8 @@ typedef struct {
     char porcentagem[100];
 } tarefa;
 
+
+
 int menu(){
     int opcao;
     printf("Menu\n1. Listar\n2. Criar novo projeto\n3. Editar projeto");
@@ -20,11 +22,11 @@ int menu(){
     scanf("%d", &opcao);
     switch(opcao){
         case 1:
-            lista();
+            lista("tarefas.bin");
             break;
         case 2:
             novo("tarefas.bin");
-            break;    
+            break;
         case 3:
             edit();
             break;
@@ -52,11 +54,12 @@ void novo(const char* arq) {
         printf("\nPORCENTAGEM FEITA: ");
         scanf(" %[^\n]", c.porcentagem);
 
-        fwrite(&c, sizeof(tarefa), 1, file);
+        fwrite(&c, sizeof(tarefa), 1, file); //escreve no arquivo
+        
         fclose(file);
-        printf("\nTarefa adicionada\n");
+        printf("\nadicionada\n");
     } else {
-        printf("\nerro ao abrir o arquivo.\n");
+        printf("\nerro\n");
     }
 }
 
