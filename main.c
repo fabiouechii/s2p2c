@@ -4,9 +4,16 @@
 int menu();
 int lista();
 int edit();
-int novo();
+void novo(const char* arq);
 
-#define MAX_SIZE 100
+typedef struct {
+    char titulo[100];
+    char data_inicio[100];
+    char data_encerramento[100];
+    char porcentagem[100];
+} tarefa;
+
+
 
 int menu(){
     int opcao;
@@ -15,17 +22,17 @@ int menu(){
     scanf("%d", &opcao);
     switch(opcao){
         case 1:
-            lista();
+            lista("tarefas.bin");
             break;
         case 2:
-            novo();
+            novo("tarefas.bin");
             break;
         case 3:
             edit();
             break;
     }
-    return 0;
 }
+
 
 //---------------------------------------------------------------------------------------
 
@@ -46,7 +53,7 @@ int lista(const char* arq){
     }
     
     fclose(file);
-    menu();
+    //menu();
 }
     
 void novo(const char* arq) {
@@ -73,8 +80,49 @@ void novo(const char* arq) {
     }
 }
 
-int edit(){
-    printf("edit");
+
+int edit() {
+    const char* arq = "tarefas.bin";
+    lista(arq); // mostra lista
+
+    int indice;
+    printf("\nDigite o indice da tarefa que deseja editar: ");
+    scanf("%d", &indice);
+    indice=indice-1;
+
+    FILE *file = fopen(arq, "r+b");
+    if (!file) {
+        printf("Erro ao abrir o arquivo.\n");
+        return -1;
+    }
+
+    tarefa c;
+    fseek(file, indice * sizeof(tarefa), SEEK_SET); // move o ponteiro
+
+    if (fread(&c, sizeof(tarefa), 1, file) != 1) {
+        printf("Tarefa não encontrada.\n");
+        fclose(file);
+        return -1;
+    }
+
+    // edicao dos campos
+    printf("\nEditando tarefa:\n");
+    printf("TITULO (atual: %s): ", c.titulo);
+    scanf(" %[^\n]", c.titulo);
+    printf("DATA DE INICIO (atual: %s): ", c.data_inicio);
+    scanf(" %[^\n]", c.data_inicio);
+    printf("DATA DE ENCERRAMENTO (atual: %s): ", c.data_encerramento);
+    scanf(" %[^\n]", c.data_encerramento);
+    printf("PORCENTAGEM (atual: %s): ", c.porcentagem);
+    scanf(" %[^\n]", c.porcentagem);
+
+    // move ponteiro para salvar mudancas
+    fseek(file, indice * sizeof(tarefa), SEEK_SET);
+    fwrite(&c, sizeof(tarefa), 1, file);
+
+    fclose(file);
+    printf("\nTarefa editada com sucesso!\n");
+    menu();
 }
 
 int main(){
